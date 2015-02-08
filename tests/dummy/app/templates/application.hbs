@@ -1,3 +1,51 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
+<div>
+  {{input class="text-input"}}
+</div>
+
+<div>
+  {{input class="email-input" type="email"}}
+</div>
+
+<div>
+  {{input class="password-input" type="password"}}
+</div>
+
+<div>
+  {{input class="tel-input" type="tel"}}
+</div>
+
+<div>
+  {{input name="hidden-input" type="hidden"}}
+</div>
+
+<div>
+  {{input class="checkbox-input" type="checkbox"}}
+</div>
+
+<div>
+  {{input class="radio-button" type="radio" value="foo"}}
+  {{input class="radio-button" type="radio" value="bar"}}
+</div>
+
+<div>
+  <label for="radio-button-text-id">Radio Button Text</label>
+  {{input class="radio-button-text" id="radio-button-text-id" type="radio"}}
+</div>
+
+<div>
+  <button class="text-button" type="button">Text Button</button>
+  <button class="text-button-submit-type" type="submit">Text Button Submit Type</button>
+</div>
+
+<div>
+  <a class="link">link to foo</a>
+  <a class="link-with-href" href="/bar">link to bar</a>
+</div>
+
+<div>
+  {{focus-input class="focus-input"}}
+</div>
+
 {{outlet}}
