@@ -143,4 +143,4 @@ var setCheckboxChecked = function(selector, checked) {
 };
 
 export {isTextInput, isEmailInput, isPasswordInput, isTelInput, isHiddenInput, isCheckbox, isRadioButton, isRadioButtonWithText, isTextButton, isLink,
-    isFocused, selectRadioButton, setCheckboxChecked};
+    isFocused, selectRadioButton, setCheckboxChecked, isHidden, isVisible};
