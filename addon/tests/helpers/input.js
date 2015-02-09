@@ -1,3 +1,13 @@
+var isVisible = function(selector) {
+    var element = find(selector);
+    equal(element.hasClass("hidden"), false);
+};
+
+var isHidden = function(selector) {
+    var element = find(selector);
+    equal(element.hasClass("hidden"), true);
+};
+
 var isTextInput = function(selector) {
     var element = find(selector);
     equal(element.length, 1);
