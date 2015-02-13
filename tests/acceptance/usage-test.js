@@ -1,5 +1,7 @@
 import Ember from "ember";
 import startApp from "../helpers/start-app";
+import {isVisible} from "ember-cli-test-helpers/tests/helpers/input";
+import {isHidden} from "ember-cli-test-helpers/tests/helpers/input";
 import {isTextInput} from "ember-cli-test-helpers/tests/helpers/input";
 import {isEmailInput} from "ember-cli-test-helpers/tests/helpers/input";
 import {isPasswordInput} from "ember-cli-test-helpers/tests/helpers/input";
@@ -151,5 +153,19 @@ test("setCheckboxChecked will check or uncheck the checkbox for given selector b
     setCheckboxChecked(CHECKBOX_INPUT, false);
     andThen(function() {
         equal(find(CHECKBOX_INPUT).prop("checked"), false);
+    });
+});
+
+test("isVisible will check that element with given selector does not have class 'hidden'", function(assert) {
+    visit("/");
+    andThen(function() {
+        isVisible(".element1");
+    });
+});
+
+test("isHidden will check that element with given selector has class 'hidden'", function(assert) {
+    visit("/");
+    andThen(function() {
+        isHidden(".element2");
     });
 });

@@ -5,6 +5,16 @@ var assertElement = function(selector, type, count) {
     return element;
 };
 
+var isVisible = function(selector) {
+    var element = find(selector);
+    equal(element.hasClass("hidden"), false);
+};
+
+var isHidden = function(selector) {
+    var element = find(selector);
+    equal(element.hasClass("hidden"), true);
+};
+
 var isTextInput = function(selector) {
     assertElement(selector, "text");
 };
@@ -125,4 +135,4 @@ var setCheckboxChecked = function(selector, checked) {
 };
 
 export {isTextInput, isEmailInput, isPasswordInput, isTelInput, isHiddenInput, isCheckbox, isRadioButton, isRadioButtonWithText, isTextButton, isLink,
-    isFocused, selectRadioButton, setCheckboxChecked};
+    isFocused, selectRadioButton, setCheckboxChecked, isHidden, isVisible};
