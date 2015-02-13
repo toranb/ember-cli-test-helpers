@@ -1,3 +1,10 @@
+var assertElement = function(selector, type, count) {
+    var element = find(selector);
+    equal(element.length, count || 1, "element with selector '" + selector + "' not found");
+    equal(element.attr("type"), type);
+    return element;
+};
+
 var isVisible = function(selector) {
     var element = find(selector);
     equal(element.hasClass("hidden"), false);
@@ -9,59 +16,32 @@ var isHidden = function(selector) {
 };
 
 var isTextInput = function(selector) {
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), "text");
+    assertElement(selector, "text");
 };
 
 var isEmailInput = function(selector) {
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), "email");
+    assertElement(selector, "email");
 };
 
 var isPasswordInput = function(selector) {
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), "password");
+    assertElement(selector, "password");
 };
 
 var isTelInput = function(selector) {
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), "tel");
-};
-
-var isHiddenInput = function(name, value) {
-    var element = find("input[name=%@]".fmt(name));
-    equal(element.length, 1);
-    equal(element.attr("type"), "hidden");
-    equal(element.val(), value);
+    assertElement(selector, "tel");
 };
 
 var isCheckbox = function(selector) {
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), "checkbox");
+    assertElement(selector, "checkbox");
+};
+
+var isHiddenInput = function(name, value) {
+    var element = assertElement("input[name=%@]".fmt(name), "hidden");
+    equal(element.val(), value, "value of '" + value + "' is not equal to the element's value of '" + element.val() + "'");
 };
 
 var isRadioButton = function(selector, count) {
-    var element = find(selector);
-    equal(element.length, count || 1);
-    equal(element.attr("type"), "radio");
-};
-
-var isRadioButtonWithText = function(selector, text) {
-    var control = find(selector);
-    var controlId = control.attr("id");
-    var label = find("label").filter("[for=" + controlId + ']');
-
-    equal(control.length, 1, "Unable to find radio button for selector " + selector);
-    equal(control.attr("type"), "radio", "Element for selector " + selector + " is not a radio button; type is " + control.attr("type"));
-    ok(control.attr("id"), "Radio button for selector " + selector + " has no id attribute, so it cannot be referred to by a label 'for' attribute");
-
-    equal(label.length, 1, "Unable to find label with 'for' attribute of the selector given for the radio button, " + controlId);
-    equal(label.text(), text);
+    assertElement(selector, "radio", count);
 };
 
 var isTextButton = function(selector, text, type) {
@@ -69,10 +49,22 @@ var isTextButton = function(selector, text, type) {
         ok(false, "Text must be passed to the isTextButton assertion function");
     }
 
-    var element = find(selector);
-    equal(element.length, 1);
-    equal(element.attr("type"), type || "button");
+    var _type = type || "button";
+    var element = assertElement(selector, _type);
     equal(element.text(), text);
+};
+
+var isRadioButtonWithText = function(selector, text) {
+    var control = find(selector);
+    var controlId = control.attr("id");
+    var label = find("label").filter("[for=" + controlId + "]");
+
+    equal(control.length, 1, "Unable to find radio button for selector " + selector);
+    equal(control.attr("type"), "radio", "Element for selector " + selector + " is not a radio button; type is " + control.attr("type"));
+    ok(control.attr("id"), "Radio button for selector " + selector + " has no id attribute, so it cannot be referred to by a label 'for' attribute");
+
+    equal(label.length, 1, "Unable to find label with 'for' attribute of the selector given for the radio button, " + controlId);
+    equal(label.text(), text);
 };
 
 var isLink = function(selector, text, href) {
