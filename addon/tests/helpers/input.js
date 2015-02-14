@@ -1,3 +1,5 @@
+import Ember from "ember";
+
 var assertElement = function(selector, type, count) {
     var element = find(selector);
     equal(element.length, count || 1, "element with selector '" + selector + "' not found");
@@ -46,7 +48,7 @@ var isRadioButton = function(selector, count) {
 
 var isTextButton = function(selector, text, type) {
     if (!text) {
-        ok(false, "Text must be passed to the isTextButton assertion function");
+        Ember.assert("Text must be passed to the isTextButton assertion function");
     }
 
     var _type = type || "button";
@@ -69,7 +71,7 @@ var isRadioButtonWithText = function(selector, text) {
 
 var isLink = function(selector, text, href) {
     if (!text) {
-        ok(false, "Text must be passed to the isLink assertion function");
+        Ember.assert("Text must be passed to the isLink assertion function");
     }
 
     var element = find(selector);
@@ -86,13 +88,13 @@ var isFocused = function(selector) {
     var expected = $(selector);
 
     if (expected.length > 1) {
-        ok(false, "Too many elements for selector " + selector + " found that were expected to have focus (" +
+        Ember.assert("Too many elements for selector " + selector + " found that were expected to have focus (" +
             expected.length + "); use a more specific selector");
         return;
     }
 
     if (focused.length === 0) {
-        ok(false, "Expected " + selector + " to have focus, but no element currently has focus");
+        Ember.assert("Expected " + selector + " to have focus, but no element currently has focus");
     } else {
         if (focused.is(expected)) {
             ok(true);
