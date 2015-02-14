@@ -107,6 +107,9 @@ var TestDone = Ember.Object.extend({
     },
     _logObjectData: function(name, data) {
         console.log(name + " data:");
+        if(typeof data === "string") {
+            data = JSON.parse(data);
+        }
         for(var key in data) {
             if(data.hasOwnProperty(key)) {
                 console.log(key + ": " + data[key]);

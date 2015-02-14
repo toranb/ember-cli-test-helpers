@@ -12,8 +12,8 @@ module("fauxjaxTestdone", {
         originalOk = ok;
         ok = function() {};
         originalWarn = console.warn;
-        originalLog = console.log;
         console.warn = function() {};
+        originalLog = console.log;
         console.log = function() {};
         $.fauxjax.unfired = function() { return []; };
         $.fauxjax.unhandled = function() { return []; };
@@ -198,6 +198,24 @@ test("incorrectMessage returns 'incorrect data' when stubbed data does not match
             url: "/foo",
             type: "POST",
             data: {foo: "baz"}
+        }
+    };
+    var output = done._incorrectMessage(request);
+    assert.equal(output.length, 1);
+    assert.equal(output[0].error, "data");
+});
+
+test("incorrect data will console log properly even if data is JSON.stringified", function(assert) {
+    var request = {
+        unfired: {
+            url: "/foo",
+            type: "POST",
+            data: JSON.stringify({foo: "bar"})
+        },
+        unhandled: {
+            url: "/foo",
+            type: "POST",
+            data: JSON.stringify({foo: "baz"})
         }
     };
     var output = done._incorrectMessage(request);
