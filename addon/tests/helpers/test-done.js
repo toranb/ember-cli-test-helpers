@@ -2,117 +2,75 @@ import Ember from "ember";
 
 var TestDone = Ember.Object.extend({
     testDoneCallback: function() {
-        var lists = this._configureLists();
-        var incorrect = lists.incorrect;
-        var unfired = lists.unfired;
-        var unhandled = lists.unhandled;
-        if(this._allThree(lists)) {
-            this._logIncorrectRequests(incorrect);
-            this._logUnfiredRequests(unfired);
-            this._logUnhandledRequests(unhandled);
-            return "incorrect, unfired, and unhandled";
-        }
-        if(incorrect.length) {
-            this._logIncorrectRequests(incorrect);
-            return "incorrect";
-        }
-        if(unfired.length && unhandled.length) {
-            this._logUnfiredRequests(unfired);
-            this._logUnhandledRequests(unhandled);
-            return "unfired and unhandled";
-        }
-        if(unfired.length) {
-            this._logUnfiredRequests(unfired);
-            return "unfired";
-        }
-        if(unhandled.length) {
-            this._logUnhandledRequests(unhandled);
-            return "unhandled";
-        }
+        this._findAndLogIncorrectAndUnfired();
+        this._findAndLogUnhandled();
     },
-    _configureLists: function() {
-        var lists = {
-            incorrect: [],
-            unhandled: [],
-            unfired: []
-        };
-        if($.fauxjax.unfired().length > 0 && $.fauxjax.unhandled().length > 0) {
-            $.fauxjax.unfired().forEach(function(unfired){
-                var found = $.fauxjax.unhandled().filter(function(unhandled){
-                    return unfired.url === unhandled.url &&
-                        unfired.type === unhandled.type;
-                });
-                if(found.length === 0) {
-                    lists.unfired.push(unfired);
-                } else {
-                    lists.incorrect.push({
-                        unfired: unfired,
-                        unhandled: found[0]
-                    });
-                }
-            });
-            $.fauxjax.unhandled().forEach(function(unhandled){
-                var found = $.fauxjax.unfired().filter(function(unfired){
-                    return unfired.url === unhandled.url &&
-                        unfired.type === unhandled.type;
-                });
-                if(found.length === 0) {
-                    lists.unhandled.push(unhandled);
-                }
-            });
-        } else {
-            lists.unfired = $.fauxjax.unfired();
-            lists.unhandled = $.fauxjax.unhandled();
-        }
-        return lists;
-    },
-    _allThree: function(lists) {
-        return lists.incorrect.length > 0 &&
-            lists.unfired.length > 0 &&
-            lists.unhandled.length > 0;
-    },
-    _logUnfiredRequests: function(unfired) {
+    _findAndLogIncorrectAndUnfired: function() {
         var self = this;
-        unfired.forEach(function(request){
-            self._createMessage(request, "FIRED");
+        $.fauxjax.unfired().forEach(function(unfired){
+            var found = $.fauxjax.unhandled().filter(function(unhandled){
+                return unfired.url === unhandled.url &&
+                    unfired.type === unhandled.type;
+            });
+            if(found.length === 0) {
+                self._logUnfiredRequests(unfired);
+            } else {
+                self._logIncorrectRequests({
+                    unfired: unfired,
+                    unhandled: found[0]
+                });
+            }
         });
+    },
+    _findAndLogUnhandled: function() {
+        var self = this;
+        $.fauxjax.unhandled().forEach(function(unhandled){
+            var found = $.fauxjax.unfired().filter(function(unfired){
+                return unfired.url === unhandled.url &&
+                    unfired.type === unhandled.type;
+            });
+            if(found.length === 0) {
+                self._logUnhandledRequests(unhandled);
+            }
+        });
+    },
+    _logUnfiredRequests: function(request) {
+        this._createMessage(request, "FIRED");
         ok(false, "Overmocked requests for %@.".fmt(this.get("name")));
     },
-    _logUnhandledRequests: function(unhandled) {
-        var self = this;
-        unhandled.forEach(function(request){
-            self._createMessage(request, "MOCKED");
-        });
+    _logUnhandledRequests: function(request) {
+        this._createMessage(request, "MOCKED");
         ok(false, "Unmocked requests for %@.".fmt(this.get("name")));
     },
-    _logIncorrectRequests: function(incorrect) {
-        var self = this;
-        incorrect.forEach(function(request){
-            self._incorrectMessage(request);
-        });
+    _logIncorrectRequests: function(request) {
+        this._incorrectMessage(request.unfired, request.unhandled);
         ok(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
     },
-    _incorrectMessage: function(request) {
-        var output = [];
-        var mockHandler = request.unhandled;
-        var realRequestContext = request.unfired;
-        if (mockHandler.data && !realRequestContext.data || _.some(_.compact([mockHandler.data, realRequestContext.data])) && !_.isEqual(mockHandler.data, realRequestContext.data)) {
-            this._logObjectData("Stubbed", mockHandler.data);
-            this._logObjectData("Real Request", realRequestContext.data);
-            output.push({
-                error: "data"
-            });
+    _incorrectMessage: function(unfired, unhandled) {
+        if(unfired.data && !unhandled.data || _.some(_.compact([unfired.data, unhandled.data])) && !_.isEqual(unhandled.data, unfired.data)) {
+            this._logObjectData("Mocked data:", unfired.data);
+            this._logObjectData("Real Request data:", unhandled.data);
         }
-        return output;
+        if(unfired.contentType && unhandled.contentType && !_.isEqual(unfired.contentType, unhandled.contentType)) {
+            console.warn("Mocked Content Type: " + unfired.contentType);
+            console.warn("Real Request Content Type: " + unhandled.contentType);
+        }
+        if(!_.isEqual(unfired.headers, unhandled.headers)) {
+            this._logObjectData("Mocked headers:", unfired.headers);
+            this._logObjectData("Real Request headers:", unhandled.headers);
+        }
     },
     _logObjectData: function(name, data) {
-        console.log(name + " data:");
+        console.warn(name);
+        if(!data) {
+            console.warn("no data");
+        }
         if(typeof data === "string") {
             data = JSON.parse(data);
         }
         for(var key in data) {
             if(data.hasOwnProperty(key)) {
-                console.log(key + ": " + data[key]);
+                console.warn(key + ": " + data[key]);
             }
         }
     },
