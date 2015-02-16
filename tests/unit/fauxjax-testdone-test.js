@@ -91,11 +91,12 @@ test("incorrect mock/request when same url and type on request of unfired and un
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "Mocked data:");
-    assert.equal(warnMessages[1], "foo: bar");
-    assert.equal(warnMessages[2], "Real Request data:");
-    assert.equal(warnMessages[3], "foo: baz");
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "foo: bar");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "foo: baz");
 });
 
 test("incorrect, unfired, and unhandled requests properly handled", function(assert) {
@@ -124,13 +125,14 @@ test("incorrect, unfired, and unhandled requests properly handled", function(ass
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "Mocked data:");
-    assert.equal(warnMessages[1], "foo: bar");
-    assert.equal(warnMessages[2], "Real Request data:");
-    assert.equal(warnMessages[3], "foo: baz");
-    assert.equal(warnMessages[4], "Request: GET to /bar not FIRED for 'test name' in 'test module'");
-    assert.equal(warnMessages[5], "Request: GET to /baz not MOCKED for 'test name' in 'test module'");
+    assert.equal(warnMessages.length, 7);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "foo: bar");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "foo: baz");
+    assert.equal(warnMessages[5], "Request: GET to /bar not FIRED for 'test name' in 'test module'");
+    assert.equal(warnMessages[6], "Request: GET to /baz not MOCKED for 'test name' in 'test module'");
 });
 
 test("Incorrect contentType handled correctly when mocked contentType does not match actual contentType", function(assert) {
@@ -149,9 +151,10 @@ test("Incorrect contentType handled correctly when mocked contentType does not m
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 2);
-    assert.equal(warnMessages[0], "Mocked Content Type: foo");
-    assert.equal(warnMessages[1], "Real Request Content Type: bar");
+    assert.equal(warnMessages.length, 3);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked Content Type: foo");
+    assert.equal(warnMessages[2], "Real Request Content Type: bar");
 });
 
 test("Incorrect 'headers' handled correctly when mocked headers do not match actual headers", function(assert) {
@@ -172,11 +175,12 @@ test("Incorrect 'headers' handled correctly when mocked headers do not match act
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "Mocked headers:");
-    assert.equal(warnMessages[1], "wat: here");
-    assert.equal(warnMessages[2], "Real Request headers:");
-    assert.equal(warnMessages[3], "now: there");
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked headers:");
+    assert.equal(warnMessages[2], "wat: here");
+    assert.equal(warnMessages[3], "Real Request headers:");
+    assert.equal(warnMessages[4], "now: there");
 });
 
 test("incorrect data will be properly formatted for console.warn even if data is JSON.stringified", function(assert) {
@@ -193,11 +197,12 @@ test("incorrect data will be properly formatted for console.warn even if data is
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "Mocked data:");
-    assert.equal(warnMessages[1], "foo: bar");
-    assert.equal(warnMessages[2], "Real Request data:");
-    assert.equal(warnMessages[3], "foo: baz");
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "foo: bar");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "foo: baz");
 });
 
 test("incorrect request data will be console.warn when no data on mocked request", function(assert) {
@@ -213,11 +218,12 @@ test("incorrect request data will be console.warn when no data on mocked request
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "Mocked data:");
-    assert.equal(warnMessages[1], "no data");
-    assert.equal(warnMessages[2], "Real Request data:");
-    assert.equal(warnMessages[3], "foo: baz");
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "no data");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "foo: baz");
 });
 
 test("incorrect request data will be console.warn when no data on real request", function(assert) {
@@ -233,11 +239,12 @@ test("incorrect request data will be console.warn when no data on real request",
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "Mocked data:");
-    assert.equal(warnMessages[1], "foo: bar");
-    assert.equal(warnMessages[2], "Real Request data:");
-    assert.equal(warnMessages[3], "no data");
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "foo: bar");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "no data");
 });
 
 test("incorrect request data will be console.warn when data is null or undefined", function(assert) {
@@ -254,10 +261,11 @@ test("incorrect request data will be console.warn when data is null or undefined
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 0);
+    assert.equal(warnMessages.length, 1);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
 });
 
-test("incorrect request data will be console.warn when data is empty", function(assert) {
+test("requests will match when data is empty", function(assert) {
     var unfired = [{
         url: "/foo",
         type: "POST",
@@ -271,5 +279,28 @@ test("incorrect request data will be console.warn when data is empty", function(
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 0);
+    assert.equal(warnMessages.length, 1);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+});
+
+test("incorrect request data will be console.warn when either data is empty", function(assert) {
+    var unfired = [{
+        url: "/foo",
+        type: "POST",
+        data: {}
+    }];
+    var unhandled = [{
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"}
+    }];
+    $.fauxjax.unfired = function() { return unfired; };
+    $.fauxjax.unhandled = function() { return unhandled; };
+    done.testDoneCallback();
+    assert.equal(warnMessages.length, 5);
+    assert.equal(warnMessages[0], "Request: POST to /foo INCORRECT for 'test name' in 'test module'");
+    assert.equal(warnMessages[1], "Mocked data:");
+    assert.equal(warnMessages[2], "no data");
+    assert.equal(warnMessages[3], "Real Request data:");
+    assert.equal(warnMessages[4], "foo: bar");
 });

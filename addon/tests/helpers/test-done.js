@@ -47,6 +47,17 @@ var TestDone = Ember.Object.extend({
         ok(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
     },
     _incorrectMessage: function(unfired, unhandled) {
+        var message = [
+            "Request:",
+            unfired.type,
+            "to",
+            unfired.url,
+            "INCORRECT for",
+            "'%@'".fmt(this.get("name")),
+            "in",
+            "'%@'".fmt(this.get("module"))
+        ];
+        console.warn(message.join(" "));
         if(unfired.data && !unhandled.data || _.some(_.compact([unfired.data, unhandled.data])) && !_.isEqual(unhandled.data, unfired.data)) {
             this._logObjectData("Mocked data:", unfired.data);
             this._logObjectData("Real Request data:", unhandled.data);
@@ -62,11 +73,11 @@ var TestDone = Ember.Object.extend({
     },
     _logObjectData: function(name, data) {
         console.warn(name);
-        if(!data) {
-            console.warn("no data");
-        }
         if(typeof data === "string") {
             data = JSON.parse(data);
+        }
+        if(!data || Object.keys(data).length === 0) {
+            console.warn("no data");
         }
         for(var key in data) {
             if(data.hasOwnProperty(key)) {
