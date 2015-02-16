@@ -1,5 +1,8 @@
 # ember-cli-test-helpers
 
+[![Build Status](https://travis-ci.org/toranb/ember-cli-test-helpers.svg?branch=master)](https://travis-ci.org/toranb/ember-cli-test-helpers)
+[![NPM Downlaads](https://img.shields.io/npm/dm/ember-cli-test-helpers.svg)](https://www.npmjs.org/package/ember-cli-test-helpers)
+
 ## Description
 Ember-cli-test-helpers is a collection of test helpers
 
