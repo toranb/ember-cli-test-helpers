@@ -36,7 +36,8 @@
     "ember-cli-uglify": "1.0.1",
     "ember-export-application-global": "^1.0.0",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "phantomjs": "~1.9.13"
   },
   "keywords": [
     "ember-addon"
