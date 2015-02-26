@@ -1,20 +1,21 @@
 import Ember from "ember";
+import { assert } from "qunit";
 
 var assertElement = function(selector, type, count) {
     var element = find(selector);
-    equal(element.length, count || 1, "element with selector '" + selector + "' not found");
-    equal(element.attr("type"), type);
+    assert.equal(element.length, count || 1, "element with selector '" + selector + "' not found");
+    assert.equal(element.attr("type"), type);
     return element;
 };
 
 var isVisible = function(selector) {
     var element = find(selector);
-    equal(element.hasClass("hidden"), false);
+    assert.equal(element.hasClass("hidden"), false);
 };
 
 var isHidden = function(selector) {
     var element = find(selector);
-    equal(element.hasClass("hidden"), true);
+    assert.equal(element.hasClass("hidden"), true);
 };
 
 var isTextInput = function(selector) {
@@ -39,7 +40,7 @@ var isCheckbox = function(selector) {
 
 var isHiddenInput = function(name, value) {
     var element = assertElement("input[name=%@]".fmt(name), "hidden");
-    equal(element.val(), value, "value of '" + value + "' is not equal to the element's value of '" + element.val() + "'");
+    assert.equal(element.val(), value, "value of '" + value + "' is not equal to the element's value of '" + element.val() + "'");
 };
 
 var isRadioButton = function(selector, count) {
@@ -53,7 +54,7 @@ var isTextButton = function(selector, text, type) {
 
     var _type = type || "button";
     var element = assertElement(selector, _type);
-    equal(element.text(), text);
+    assert.equal(element.text(), text);
 };
 
 var isRadioButtonWithText = function(selector, text) {
@@ -61,12 +62,12 @@ var isRadioButtonWithText = function(selector, text) {
     var controlId = control.attr("id");
     var label = find("label").filter("[for=" + controlId + "]");
 
-    equal(control.length, 1, "Unable to find radio button for selector " + selector);
-    equal(control.attr("type"), "radio", "Element for selector " + selector + " is not a radio button; type is " + control.attr("type"));
-    ok(control.attr("id"), "Radio button for selector " + selector + " has no id attribute, so it cannot be referred to by a label 'for' attribute");
+    assert.equal(control.length, 1, "Unable to find radio button for selector " + selector);
+    assert.equal(control.attr("type"), "radio", "Element for selector " + selector + " is not a radio button; type is " + control.attr("type"));
+    assert.ok(control.attr("id"), "Radio button for selector " + selector + " has no id attribute, so it cannot be referred to by a label 'for' attribute");
 
-    equal(label.length, 1, "Unable to find label with 'for' attribute of the selector given for the radio button, " + controlId);
-    equal(label.text(), text);
+    assert.equal(label.length, 1, "Unable to find label with 'for' attribute of the selector given for the radio button, " + controlId);
+    assert.equal(label.text(), text);
 };
 
 var isLink = function(selector, text, href) {
@@ -75,11 +76,11 @@ var isLink = function(selector, text, href) {
     }
 
     var element = find(selector);
-    equal(element.length, 1);
-    equal(element.text(), text);
+    assert.equal(element.length, 1);
+    assert.equal(element.text(), text);
 
     if (href) {
-        equal(element.attr("href"), href);
+        assert.equal(element.attr("href"), href);
     }
 };
 
@@ -97,7 +98,7 @@ var isFocused = function(selector) {
         Ember.assert("Expected " + selector + " to have focus, but no element currently has focus");
     } else {
         if (focused.is(expected)) {
-            ok(true);
+            assert.ok(true);
         } else {
             var tagName = focused.prop("tagName").toLowerCase();
             var classes = focused.attr("class");
@@ -106,7 +107,7 @@ var isFocused = function(selector) {
                 tagName = tagName + "." + classes.replace(/\s+/g, ".");
             }
 
-            equal(focused.filter(selector).length, 1, "Expected " + selector + " to have focus, but " + tagName + " has focus");
+            assert.equal(focused.filter(selector).length, 1, "Expected " + selector + " to have focus, but " + tagName + " has focus");
         }
     }
 };

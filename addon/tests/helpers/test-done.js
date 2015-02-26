@@ -36,15 +36,15 @@ var TestDone = Ember.Object.extend({
     },
     _logUnfiredRequests: function(request) {
         this._createMessage(request, "FIRED");
-        ok(false, "Overmocked requests for %@.".fmt(this.get("name")));
+        Ember.assert(false, "Overmocked requests for %@.".fmt(this.get("name")));
     },
     _logUnhandledRequests: function(request) {
         this._createMessage(request, "MOCKED");
-        ok(false, "Unmocked requests for %@.".fmt(this.get("name")));
+        Ember.assert(false, "Unmocked requests for %@.".fmt(this.get("name")));
     },
     _logIncorrectRequests: function(request) {
         this._incorrectMessage(request.unfired, request.unhandled);
-        ok(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
+        Ember.assert(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
     },
     _incorrectMessage: function(unfired, unhandled) {
         this._createMessage(unfired, "CORRECT");

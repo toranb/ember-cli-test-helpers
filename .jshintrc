@@ -6,8 +6,6 @@
     "window",
     "-Promise",
     "find",
-    "equal",
-    "ok",
     "andThen",
     "click"
   ],

@@ -1,5 +1,5 @@
 import Ember from "ember";
-import startApp from "../helpers/start-app";
+import startApp from "ember-cli-test-helpers/helpers/start-app";
 import {isVisible} from "ember-cli-test-helpers/tests/helpers/input";
 import {isHidden} from "ember-cli-test-helpers/tests/helpers/input";
 import {isTextInput} from "ember-cli-test-helpers/tests/helpers/input";
@@ -15,6 +15,7 @@ import {isLink} from "ember-cli-test-helpers/tests/helpers/input";
 import {isFocused} from "ember-cli-test-helpers/tests/helpers/input";
 import {selectRadioButton} from "ember-cli-test-helpers/tests/helpers/input";
 import {setCheckboxChecked} from "ember-cli-test-helpers/tests/helpers/input";
+import { test, module } from "qunit";
 
 var application;
 
