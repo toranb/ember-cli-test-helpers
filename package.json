@@ -4,7 +4,8 @@
   "description": "A collection of test helpers for ember web applications",
   "scripts": {
     "start": "ember server",
-    "build": "ember build"
+    "build": "ember build",
+    "test": "ember test"
   },
   "repository": {
     "type": "git",
