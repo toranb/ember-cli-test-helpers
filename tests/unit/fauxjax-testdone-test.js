@@ -1,6 +1,7 @@
 /*global ok:true */
 import TestDone from "ember-cli-test-helpers/tests/helpers/test-done";
 import { test, module } from "qunit";
+import QUnit from "qunit";
 
 // mocking global ok and console.warn
 var originalOk, originalWarn;
@@ -13,15 +14,15 @@ module("fauxjaxTestdone", {
             module: "test module",
             name: "test name"
         });
-        originalOk = ok;
-        ok = function() {};
+        originalOk = QUnit.assert.ok;
+        QUnit.assert.ok = function() {};
         originalWarn = console.warn;
         console.warn = function(message) { warnMessages.push(message); };
         $.fauxjax.unfired = function() { return []; };
         $.fauxjax.unhandled = function() { return []; };
     },
     teardown: function() {
-        ok = originalOk;
+        QUnit.assert.ok = originalOk;
         console.warn = originalWarn;
     }
 });

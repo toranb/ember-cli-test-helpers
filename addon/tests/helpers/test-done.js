@@ -1,4 +1,5 @@
 import Ember from "ember";
+import QUnit from "qunit";
 
 var TestDone = Ember.Object.extend({
     testDoneCallback: function() {
@@ -36,15 +37,15 @@ var TestDone = Ember.Object.extend({
     },
     _logUnfiredRequests: function(request) {
         this._createMessage(request, "FIRED");
-        Ember.assert(false, "Overmocked requests for %@.".fmt(this.get("name")));
+        QUnit.assert.ok(false, "Overmocked requests for %@.".fmt(this.get("name")));
     },
     _logUnhandledRequests: function(request) {
         this._createMessage(request, "MOCKED");
-        Ember.assert(false, "Unmocked requests for %@.".fmt(this.get("name")));
+        QUnit.assert.ok(false, "Unmocked requests for %@.".fmt(this.get("name")));
     },
     _logIncorrectRequests: function(request) {
         this._incorrectMessage(request.unfired, request.unhandled);
-        Ember.assert(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
+        QUnit.assert.ok(false, "Incorrectly mocked requests for %@.".fmt(this.get("name")));
     },
     _incorrectMessage: function(unfired, unhandled) {
         this._createMessage(unfired, "CORRECT");
