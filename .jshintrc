@@ -1,6 +1,5 @@
 {
   "predef": [
-    "$",
     "_",
     "document",
     "window",

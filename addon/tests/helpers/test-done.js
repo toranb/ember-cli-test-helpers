@@ -1,6 +1,8 @@
 import Ember from "ember";
 import QUnit from "qunit";
 
+var fauxjax = Ember.$.fauxjax;
+
 var TestDone = Ember.Object.extend({
     testDoneCallback: function() {
         this._findAndLogIncorrectAndUnfired();
@@ -8,8 +10,8 @@ var TestDone = Ember.Object.extend({
     },
     _findAndLogIncorrectAndUnfired: function() {
         var self = this;
-        $.fauxjax.unfired().forEach(function(unfired){
-            var found = $.fauxjax.unhandled().filter(function(unhandled){
+        fauxjax.unfired().forEach(function(unfired){
+            var found = fauxjax.unhandled().filter(function(unhandled){
                 return unfired.url === unhandled.url &&
                     unfired.type === unhandled.type;
             });
@@ -25,8 +27,8 @@ var TestDone = Ember.Object.extend({
     },
     _findAndLogUnhandled: function() {
         var self = this;
-        $.fauxjax.unhandled().forEach(function(unhandled){
-            var found = $.fauxjax.unfired().filter(function(unfired){
+        fauxjax.unhandled().forEach(function(unhandled){
+            var found = fauxjax.unfired().filter(function(unfired){
                 return unfired.url === unhandled.url &&
                     unfired.type === unhandled.type;
             });

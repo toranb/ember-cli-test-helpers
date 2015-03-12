@@ -85,8 +85,8 @@ var isLink = function(selector, text, href) {
 };
 
 var isFocused = function(selector) {
-    var focused = $(document.activeElement);
-    var expected = $(selector);
+    var focused = Ember.$(document.activeElement);
+    var expected = Ember.$(selector);
 
     if (expected.length > 1) {
         Ember.assert("Too many elements for selector " + selector + " found that were expected to have focus (" +
@@ -118,7 +118,7 @@ var selectRadioButton = function(selector, value) {
             find(selector).each(function(index, element) {
                 if (element.checked) {
                     element.checked = false;
-                    $(element).trigger("change");
+                    Ember.$(element).trigger("change");
                 }
             });
         } else {

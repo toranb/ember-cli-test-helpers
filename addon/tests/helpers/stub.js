@@ -1,5 +1,7 @@
+import Ember from "ember";
+
 var stubEndpointForHttpRequest = function(url, json, verb, status, post_data) {
-    return $.fauxjax.new({
+    return Ember.$.fauxjax.new({
         type: verb || "GET",
         url: url,
         status: status || 200,
@@ -13,9 +15,9 @@ var stubEndpointForHttpRequest = function(url, json, verb, status, post_data) {
 
 var clearStubHttpRequests = function(id) {
     if (id) {
-        $.fauxjax.remove(id);
+        Ember.$.fauxjax.remove(id);
     } else {
-        $.fauxjax.clear();
+        Ember.$.fauxjax.clear();
     }
 };
 
