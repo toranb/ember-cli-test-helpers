@@ -168,6 +168,50 @@ test("Incorrect contentType handled correctly when mocked contentType does not m
     assert.equal(warnMessages[3], "Real Request Content Type: bar");
 });
 
+test("Incorrect contentType handled correctly when mocked contentType is undefined", function(assert) {
+    var unfired = [{
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"}
+    }];
+    var unhandled = [{
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"},
+        contentType: "bar"
+    }];
+    $.fauxjax.unfired = function() { return unfired; };
+    $.fauxjax.unhandled = function() { return unhandled; };
+    done.testDoneCallback();
+    assert.equal(warnMessages.length, 4);
+    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
+    assert.equal(warnMessages[2], "Mocked Content Type: undefined");
+    assert.equal(warnMessages[3], "Real Request Content Type: bar");
+});
+
+test("Incorrect contentType handled correctly when real contentType is undefined", function(assert) {
+    var unfired = [{
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"},
+        contentType: "foo"
+    }];
+    var unhandled = [{
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"}
+    }];
+    $.fauxjax.unfired = function() { return unfired; };
+    $.fauxjax.unhandled = function() { return unhandled; };
+    done.testDoneCallback();
+    assert.equal(warnMessages.length, 4);
+    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
+    assert.equal(warnMessages[2], "Mocked Content Type: foo");
+    assert.equal(warnMessages[3], "Real Request Content Type: undefined");
+});
+
 test("Incorrect 'headers' handled correctly when mocked headers do not match actual headers", function(assert) {
     var unfired = [{
         url: "/foo",

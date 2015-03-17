@@ -55,7 +55,7 @@ var TestDone = Ember.Object.extend({
             this._logObjectData("Mocked data:", unfired.data);
             this._logObjectData("Real Request data:", unhandled.data);
         }
-        if(unfired.contentType && unhandled.contentType && !_.isEqual(unfired.contentType, unhandled.contentType)) {
+        if((unfired.contentType || unhandled.contentType) && !_.isEqual(unfired.contentType, unhandled.contentType)) {
             console.warn("Mocked Content Type: " + unfired.contentType);
             console.warn("Real Request Content Type: " + unhandled.contentType);
         }
