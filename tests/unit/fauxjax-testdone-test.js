@@ -1,5 +1,5 @@
 /*global ok:true */
-import TestDone from "ember-cli-test-helpers/tests/helpers/test-done";
+import TestDone from "../helpers/test-done";
 import { test, module } from "qunit";
 import QUnit from "qunit";
 
