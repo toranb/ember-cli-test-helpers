@@ -6,6 +6,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+    this.route("modal", {path:"/modal"});
 });
 
 export default Router;
