@@ -14,8 +14,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      defaultWaitForTimeout: 1,
-      foundationModalAnimationSpeed: 0,
+      defaultWaitForTimeout: 400,
       foundationModalElement: "#ember-application"
     }
   };
