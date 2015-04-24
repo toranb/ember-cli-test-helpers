@@ -22,7 +22,7 @@ $ ember test
 ## Usage
 Example usage of helpers can be found in usage-test.js.
 
-The wait for helper waits half a second by default, but you can configure this value if needed.
+The wait for helper waits half a second by default, but you can configure this value.
 
 ```js
 module.exports = function(/* environment, appConfig */) {
