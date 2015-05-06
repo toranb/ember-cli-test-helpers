@@ -35,8 +35,26 @@ test("no warn or log messages when no unfired requests and no unhandled requests
 test("1 warn message when there is one unfired request", function(assert) {
     var unfired = [
         {
-            url: "/foo",
-            type: "GET"
+            request: {
+                url: "/foo",
+                type: "GET"
+            }
+        }
+    ];
+    $.fauxjax.unfired = function() { return unfired; };
+    done.testDoneCallback();
+    assert.equal(warnMessages.length, 2);
+    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[1], "Request: GET to /foo not FIRED");
+});
+
+test("1 warn message when there is one unfired request with method", function(assert) {
+    var unfired = [
+        {
+            request: {
+                url: "/foo",
+                method: "GET"
+            }
         }
     ];
     $.fauxjax.unfired = function() { return unfired; };
@@ -49,8 +67,10 @@ test("1 warn message when there is one unfired request", function(assert) {
 test("1 warn message when there is one unhandled request", function(assert) {
     var unhandled = [
         {
-            url: "/foo",
-            type: "GET"
+            request: {
+                url: "/foo",
+                type: "GET"
+            }
         }
     ];
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -63,14 +83,18 @@ test("1 warn message when there is one unhandled request", function(assert) {
 test("2 warn messages when there are when both unhandled and unfired requests", function(assert) {
     var unfired = [
         {
-            url: "/bar",
-            type: "GET"
+            request: {
+                url: "/bar",
+                method: "GET"
+            }
         }
     ];
     var unhandled = [
         {
-            url: "/foo",
-            type: "GET"
+            request: {
+                url: "/foo",
+                type: "GET"
+            }
         }
     ];
     $.fauxjax.unfired = function() { return unfired; };
@@ -85,14 +109,18 @@ test("2 warn messages when there are when both unhandled and unfired requests", 
 
 test("incorrect mock/request when same url and type on request of unfired and unhandled", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "baz"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "baz"}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -109,24 +137,32 @@ test("incorrect mock/request when same url and type on request of unfired and un
 test("incorrect, unfired, and unhandled requests properly handled", function(assert) {
     var unfired = [
         {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "bar"}
+            request: {
+                url: "/foo",
+                type: "POST",
+                data: {foo: "bar"}
+            }
         },
         {
-            url: "/bar",
-            type: "GET"
+            request: {
+                url: "/bar",
+                type: "GET"
+            }
         }
     ];
     var unhandled = [
         {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "baz"}
+            request: {
+                url: "/foo",
+                type: "POST",
+                data: {foo: "baz"}
+            }
         },
         {
-            url: "/baz",
-            type: "GET"
+            request: {
+                url: "/baz",
+                type: "GET"
+            }
         }
     ];
     $.fauxjax.unfired = function() { return unfired; };
@@ -145,87 +181,22 @@ test("incorrect, unfired, and unhandled requests properly handled", function(ass
     assert.equal(warnMessages[9], "Request: GET to /baz not MOCKED");
 });
 
-test("Incorrect contentType handled correctly when mocked contentType does not match actual contentType", function(assert) {
-    var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "foo"
-    }];
-    var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "bar"
-    }];
-    $.fauxjax.unfired = function() { return unfired; };
-    $.fauxjax.unhandled = function() { return unhandled; };
-    done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "test name in test module");
-    assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
-    assert.equal(warnMessages[2], "Mocked Content Type: foo");
-    assert.equal(warnMessages[3], "Real Request Content Type: bar");
-});
-
-test("Incorrect contentType handled correctly when mocked contentType is undefined", function(assert) {
-    var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
-    }];
-    var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "bar"
-    }];
-    $.fauxjax.unfired = function() { return unfired; };
-    $.fauxjax.unhandled = function() { return unhandled; };
-    done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "test name in test module");
-    assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
-    assert.equal(warnMessages[2], "Mocked Content Type: undefined");
-    assert.equal(warnMessages[3], "Real Request Content Type: bar");
-});
-
-test("Incorrect contentType handled correctly when real contentType is undefined", function(assert) {
-    var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "foo"
-    }];
-    var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
-    }];
-    $.fauxjax.unfired = function() { return unfired; };
-    $.fauxjax.unhandled = function() { return unhandled; };
-    done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "test name in test module");
-    assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
-    assert.equal(warnMessages[2], "Mocked Content Type: foo");
-    assert.equal(warnMessages[3], "Real Request Content Type: undefined");
-});
-
 test("Incorrect 'headers' handled correctly when mocked headers do not match actual headers", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "foo",
-        headers: {wat: "here"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"},
+            headers: {wat: "here"}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"},
-        contentType: "foo",
-        headers: {now: "there"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"},
+            headers: {now: "there"}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -241,14 +212,18 @@ test("Incorrect 'headers' handled correctly when mocked headers do not match act
 
 test("incorrect data will be properly formatted for console.warn even if data is JSON.stringified", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: JSON.stringify({foo: "bar"})
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: JSON.stringify({foo: "bar"})
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: JSON.stringify({foo: "baz"})
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: JSON.stringify({foo: "baz"})
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -264,13 +239,17 @@ test("incorrect data will be properly formatted for console.warn even if data is
 
 test("incorrect request data will be console.warn when no data on mocked request", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST"
+        request: {
+            url: "/foo",
+            type: "POST"
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "baz"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "baz"}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -286,13 +265,17 @@ test("incorrect request data will be console.warn when no data on mocked request
 
 test("incorrect request data will be console.warn when no data on real request", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST"
+        request: {
+            url: "/foo",
+            type: "POST"
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -308,14 +291,18 @@ test("incorrect request data will be console.warn when no data on real request",
 
 test("incorrect request data will be console.warn when data is null or undefined", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: null
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: null
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -331,14 +318,18 @@ test("incorrect request data will be console.warn when data is null or undefined
 
 test("incorrect request data will be console.warn when data is null or undefined", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: undefined
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: undefined
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -354,37 +345,41 @@ test("incorrect request data will be console.warn when data is null or undefined
 
 test("requests will match when data is empty", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {},
-        contentType: "bar"
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {},
-        contentType: "foo"
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 4);
+    assert.equal(warnMessages.length, 2);
     assert.equal(warnMessages[0], "test name in test module");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
-    assert.equal(warnMessages[2], "Mocked Content Type: bar");
-    assert.equal(warnMessages[3], "Real Request Content Type: foo");
 });
 
 test("incorrect request data will be console.warn when either data is empty", function(assert) {
     var unfired = [{
-        url: "/foo",
-        type: "POST",
-        data: {}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {}
+        }
     }];
     var unhandled = [{
-        url: "/foo",
-        type: "POST",
-        data: {foo: "bar"}
+        request: {
+            url: "/foo",
+            type: "POST",
+            data: {foo: "bar"}
+        }
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
