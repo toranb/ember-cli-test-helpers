@@ -34,8 +34,16 @@ module.exports = function(/* environment, appConfig */) {
 };
 ```
 
+The `QUnit.testDone` callback function found in
+`test-support/helpers/fauxjax-testdone.js` is to be used
+with 1.X versions of the [fauxjax] library. For older
+versions of fauxjax < 1.0.0, please use a version less
+than or equal to 0.7.0 of ember-cli-test-helpers.
+
 ## License
 
 Copyright © 2015 Toran Billups
 
 Licensed under the MIT License
+
+[fauxjax]: https://github.com/jarrodctaylor/fauxjax
