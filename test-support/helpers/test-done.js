@@ -19,7 +19,7 @@ var TestDone = Ember.Object.extend({
             } else {
                 self._logIncorrectRequests({
                     unfired: unfired.request,
-                    unhandled: found[0].request
+                    unhandled: found[0]
                 });
             }
         });
@@ -31,13 +31,13 @@ var TestDone = Ember.Object.extend({
                 return self._unfiredAndUnhandledMatch(unfired, unhandled);
             });
             if(found.length === 0) {
-                self._logUnhandledRequests(unhandled.request);
+                self._logUnhandledRequests(unhandled);
             }
         });
     },
     _unfiredAndUnhandledMatch: function(unfired, unhandled) {
-        return unfired.request.url === unhandled.request.url &&
-            unfired.request.type === unhandled.request.type;
+        return unfired.request.url === unhandled.url &&
+            unfired.request.type === unhandled.type;
     },
     _logUnfiredRequests: function(request) {
         this._createMessage(request, "FIRED");
