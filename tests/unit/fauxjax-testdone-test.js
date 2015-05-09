@@ -33,14 +33,12 @@ test("no warn or log messages when no unfired requests and no unhandled requests
 });
 
 test("1 warn message when there is one unfired request", function(assert) {
-    var unfired = [
-        {
-            request: {
-                url: "/foo",
-                type: "GET"
-            }
+    var unfired = [{
+        request: {
+            url: "/foo",
+            type: "GET"
         }
-    ];
+    }];
     $.fauxjax.unfired = function() { return unfired; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
@@ -49,14 +47,12 @@ test("1 warn message when there is one unfired request", function(assert) {
 });
 
 test("1 warn message when there is one unfired request with method", function(assert) {
-    var unfired = [
-        {
-            request: {
-                url: "/foo",
-                method: "GET"
-            }
+    var unfired = [{
+        request: {
+            url: "/foo",
+            method: "GET"
         }
-    ];
+    }];
     $.fauxjax.unfired = function() { return unfired; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
@@ -65,14 +61,10 @@ test("1 warn message when there is one unfired request with method", function(as
 });
 
 test("1 warn message when there is one unhandled request", function(assert) {
-    var unhandled = [
-        {
-            request: {
-                url: "/foo",
-                type: "GET"
-            }
-        }
-    ];
+    var unhandled = [{
+        url: "/foo",
+        type: "GET"
+    }];
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
@@ -81,22 +73,16 @@ test("1 warn message when there is one unhandled request", function(assert) {
 });
 
 test("2 warn messages when there are when both unhandled and unfired requests", function(assert) {
-    var unfired = [
-        {
-            request: {
-                url: "/bar",
-                method: "GET"
-            }
+    var unfired = [{
+        request: {
+            url: "/bar",
+            method: "GET"
         }
-    ];
-    var unhandled = [
-        {
-            request: {
-                url: "/foo",
-                type: "GET"
-            }
-        }
-    ];
+    }];
+    var unhandled = [{
+        url: "/foo",
+        type: "GET"
+    }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
@@ -116,11 +102,9 @@ test("incorrect mock/request when same url and type on request of unfired and un
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "baz"}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {foo: "baz"}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -152,17 +136,13 @@ test("incorrect, unfired, and unhandled requests properly handled", function(ass
     ];
     var unhandled = [
         {
-            request: {
-                url: "/foo",
-                type: "POST",
-                data: {foo: "baz"}
-            }
+            url: "/foo",
+            type: "POST",
+            data: {foo: "baz"}
         },
         {
-            request: {
-                url: "/baz",
-                type: "GET"
-            }
+            url: "/baz",
+            type: "GET"
         }
     ];
     $.fauxjax.unfired = function() { return unfired; };
@@ -191,12 +171,10 @@ test("Incorrect 'headers' handled correctly when mocked headers do not match act
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "bar"},
-            headers: {now: "there"}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"},
+        headers: {now: "there"}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -219,11 +197,9 @@ test("incorrect data will be properly formatted for console.warn even if data is
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: JSON.stringify({foo: "baz"})
-        }
+        url: "/foo",
+        type: "POST",
+        data: JSON.stringify({foo: "baz"})
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -245,11 +221,9 @@ test("incorrect request data will be console.warn when no data on mocked request
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "baz"}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {foo: "baz"}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -272,10 +246,8 @@ test("incorrect request data will be console.warn when no data on real request",
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST"
-        }
+        url: "/foo",
+        type: "POST"
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -298,11 +270,9 @@ test("incorrect request data will be console.warn when data is null or undefined
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "bar"}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -325,11 +295,9 @@ test("incorrect request data will be console.warn when data is null or undefined
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: undefined
-        }
+        url: "/foo",
+        type: "POST",
+        data: undefined
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -352,11 +320,9 @@ test("requests will match when data is empty", function(assert) {
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
@@ -375,11 +341,9 @@ test("incorrect request data will be console.warn when either data is empty", fu
         }
     }];
     var unhandled = [{
-        request: {
-            url: "/foo",
-            type: "POST",
-            data: {foo: "bar"}
-        }
+        url: "/foo",
+        type: "POST",
+        data: {foo: "bar"}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
