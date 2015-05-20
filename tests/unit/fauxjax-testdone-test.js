@@ -1,14 +1,12 @@
-/*global ok:true */
 import TestDone from "../helpers/test-done";
 import { test, module } from "qunit";
 import QUnit from "qunit";
 
-// mocking global ok and console.warn
 var originalOk, originalWarn;
 var warnMessages, done;
 
 module("fauxjaxTestdone", {
-    setup: function() {
+    beforeEach: function() {
         warnMessages = [];
         done = TestDone.create({
             module: "test module",
@@ -21,7 +19,7 @@ module("fauxjaxTestdone", {
         $.fauxjax.unfired = function() { return []; };
         $.fauxjax.unhandled = function() { return []; };
     },
-    teardown: function() {
+    afterEach: function() {
         QUnit.assert.ok = originalOk;
         console.warn = originalWarn;
     }

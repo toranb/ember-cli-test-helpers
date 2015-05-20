@@ -23,10 +23,10 @@ var RADIO_BUTTON = "input.radio-button";
 var CHECKBOX_INPUT = "input.checkbox-input";
 
 module("Acceptance: Usage", {
-    setup: function() {
+    beforeEach: function() {
         application = startApp();
     },
-    teardown: function() {
+    afterEach: function() {
         Ember.run(application, "destroy");
     }
 });

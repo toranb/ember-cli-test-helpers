@@ -10,7 +10,7 @@ var module = function(name, settings){
                 return settings.beforeEach.apply(this, arguments);
             }
         },
-        afterEach: function() {
+        afterEach: function(assert) {
             TestDone.create({
                 name: assert.test.testName,
                 module: assert.test.module.name,
