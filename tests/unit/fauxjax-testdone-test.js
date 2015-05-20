@@ -4,6 +4,7 @@ import QUnit from "qunit";
 
 var originalOk, originalWarn;
 var warnMessages, done;
+var originalUnfired, originalUnhandled;
 
 module("fauxjaxTestdone", {
     beforeEach: function() {
@@ -16,12 +17,16 @@ module("fauxjaxTestdone", {
         QUnit.assert.ok = function() {};
         originalWarn = console.warn;
         console.warn = function(message) { warnMessages.push(message); };
+        originalUnfired = $.fauxjax.unfired;
+        originalUnhandled = $.fauxjax.unhandled;
         $.fauxjax.unfired = function() { return []; };
         $.fauxjax.unhandled = function() { return []; };
     },
     afterEach: function() {
         QUnit.assert.ok = originalOk;
         console.warn = originalWarn;
+        $.fauxjax.unfired = originalUnfired;
+        $.fauxjax.unhandled = originalUnhandled;
     }
 });
 
