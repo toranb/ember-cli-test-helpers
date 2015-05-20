@@ -6,10 +6,10 @@ import { test, module } from "qunit";
 var application;
 
 module("Acceptance: waitFor", {
-    setup: function() {
+    beforeEach: function() {
         application = startApp();
     },
-    teardown: function() {
+    afterEach: function() {
         Ember.run(application, "destroy");
     }
 });
