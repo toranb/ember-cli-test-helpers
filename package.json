@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-test-helpers",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A collection of test helpers for ember web applications",
   "scripts": {
     "start": "ember server",
