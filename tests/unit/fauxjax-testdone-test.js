@@ -42,7 +42,7 @@ test("1 warn message when there is one unfired request", function(assert) {
     $.fauxjax.unfired = function() { return unfired; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: GET to /foo not FIRED");
 });
 
@@ -56,7 +56,7 @@ test("1 warn message when there is one unfired request with method", function(as
     $.fauxjax.unfired = function() { return unfired; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: GET to /foo not FIRED");
 });
 
@@ -68,7 +68,7 @@ test("1 warn message when there is one unhandled request", function(assert) {
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: GET to /foo not MOCKED");
 });
 
@@ -87,9 +87,9 @@ test("2 warn messages when there are when both unhandled and unfired requests", 
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 4);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: GET to /bar not FIRED");
-    assert.equal(warnMessages[2], "test name in test module");
+    assert.equal(warnMessages[2], "test module test name");
     assert.equal(warnMessages[3], "Request: GET to /foo not MOCKED");
 });
 
@@ -110,7 +110,7 @@ test("incorrect mock/request when same url and type on request of unfired and un
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "foo: bar");
@@ -149,15 +149,15 @@ test("incorrect, unfired, and unhandled requests properly handled", function(ass
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 10);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "foo: bar");
     assert.equal(warnMessages[4], "Real Request data:");
     assert.equal(warnMessages[5], "foo: baz");
-    assert.equal(warnMessages[6], "test name in test module");
+    assert.equal(warnMessages[6], "test module test name");
     assert.equal(warnMessages[7], "Request: GET to /bar not FIRED");
-    assert.equal(warnMessages[8], "test name in test module");
+    assert.equal(warnMessages[8], "test module test name");
     assert.equal(warnMessages[9], "Request: GET to /baz not MOCKED");
 });
 
@@ -180,7 +180,7 @@ test("Incorrect 'headers' handled correctly when mocked headers do not match act
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked headers:");
     assert.equal(warnMessages[3], "wat: here");
@@ -205,7 +205,7 @@ test("incorrect data will be properly formatted for console.warn even if data is
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "foo: bar");
@@ -229,7 +229,7 @@ test("incorrect request data will be console.warn when no data on mocked request
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");
@@ -253,7 +253,7 @@ test("incorrect request data will be console.warn when no data on real request",
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "foo: bar");
@@ -278,7 +278,7 @@ test("incorrect request data will be console.warn when data is null or undefined
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");
@@ -303,7 +303,7 @@ test("incorrect request data will be console.warn when data is null or undefined
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "foo: bar");
@@ -328,7 +328,7 @@ test("requests will match when data is empty", function(assert) {
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 2);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
 });
 
@@ -349,7 +349,7 @@ test("incorrect request data will be console.warn when either data is empty", fu
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
     assert.equal(warnMessages.length, 6);
-    assert.equal(warnMessages[0], "test name in test module");
+    assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");

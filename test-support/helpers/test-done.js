@@ -41,16 +41,22 @@ var TestDone = Ember.Object.extend({
     },
     _logUnfiredRequests: function(request) {
         this._createMessage(request, "FIRED");
-        QUnit.assert.ok(false, "Overmocked requests for " + this.get("name"));
+        this.get("qunitAssert").ok(false, "Overmocked requests for " + this.get("name"));
     },
     _logUnhandledRequests: function(request) {
         this._createMessage(request, "MOCKED");
-        QUnit.assert.ok(false, "Unmocked requests for %@." + this.get("name"));
+        this.get("qunitAssert").ok(false, "Unmocked requests for " + this.get("name"));
     },
     _logIncorrectRequests: function(request) {
         this._incorrectMessage(request.unfired, request.unhandled);
-        QUnit.assert.ok(false, "Incorrectly mocked requests for %@." + this.get("name"));
+        this.get("qunitAssert").ok(false, "Incorrectly mocked requests for " + this.get("name"));
     },
+    qunitAssert: Ember.computed(function(key, value) {
+        if(arguments.length > 1) {
+            this.set("assert", value);
+        }
+        return this.get("assert") || QUnit.assert;
+    }),
     _incorrectMessage: function(unfired, unhandled) {
         this._createMessage(unfired, "CORRECT");
         if(unfired.data && !unhandled.data || _.some(_.compact([unfired.data, unhandled.data])) && !_.isEqual(unhandled.data, unfired.data)) {
@@ -78,9 +84,8 @@ var TestDone = Ember.Object.extend({
     },
     _createMessage: function(request, verb) {
         var testNameMessage = [
-            this.get("name"),
-            "in",
-            this.get("module")
+            this.get("module"),
+            this.get("name")
         ];
         console.warn(testNameMessage.join(" "));
         var message = [
