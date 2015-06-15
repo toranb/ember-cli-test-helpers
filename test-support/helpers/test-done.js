@@ -51,11 +51,14 @@ var TestDone = Ember.Object.extend({
         this._incorrectMessage(request.unfired, request.unhandled);
         this.get("qunitAssert").ok(false, "Incorrectly mocked requests for " + this.get("name"));
     },
-    qunitAssert: Ember.computed(function(key, value) {
-        if(arguments.length > 1) {
+    qunitAssert: Ember.computed({
+        get(key) {
+            return this.get("assert") || QUnit.assert;
+        },
+        set(key, value) {
             this.set("assert", value);
+            return this.get("assert") || QUnit.assert;
         }
-        return this.get("assert") || QUnit.assert;
     }),
     _incorrectMessage: function(unfired, unhandled) {
         this._createMessage(unfired, "CORRECT");

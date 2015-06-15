@@ -2,7 +2,7 @@
   "name": "ember-cli-test-helpers",
   "dependencies": {
     "jquery": "2.1.1",
-    "ember": "1.11.2",
+    "ember": "1.12.1",
     "ember-resolver": "~0.1.12",
     "foundation": "zurb/bower-foundation#~5.5.0",
     "loader.js": "ember-cli/loader.js#3.2.0",
