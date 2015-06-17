@@ -39,7 +39,7 @@ var isCheckbox = function(selector) {
 };
 
 var isHiddenInput = function(name, value) {
-    var element = assertElement("input[name=%@]".fmt(name), "hidden");
+    var element = assertElement("input[name=" + name + "]", "hidden");
     QUnit.assert.equal(element.val(), value, "value of '" + value + "' is not equal to the element's value of '" + element.val() + "'");
 };
 
@@ -122,7 +122,7 @@ var selectRadioButton = function(selector, value) {
                 }
             });
         } else {
-            find(selector).filter("[value=%@]".fmt(value)).prop("checked", true).trigger("change");
+            find(selector).filter("[value=" + value + "]").prop("checked", true).trigger("change");
         }
     });
 };
