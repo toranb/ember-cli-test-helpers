@@ -43,12 +43,8 @@ var stubEndpointForHttpRequest = function(url, json, verb, status, post_data) {
     });
 };
 
-var clearRequests = function(id) {
-    if (id) {
-        Ember.$.fauxjax.remove(id);
-    } else {
-        Ember.$.fauxjax.clear();
-    }
+var clearStubRequests = function(id) {
+    clearStubHttpRequests(id);
 };
 
 var clearStubHttpRequests = function(id) {
@@ -59,4 +55,4 @@ var clearStubHttpRequests = function(id) {
     }
 };
 
-export { stubEndpointForHttpRequest, clearStubHttpRequests, stubRequest, clearRequests };
+export { stubEndpointForHttpRequest, clearStubHttpRequests, stubRequest, clearStubRequests };
