@@ -1,17 +1,30 @@
 import Ember from "ember";
 
-var stubRequest = function(request, response) {
+var setupRequest = function setupRequest(request) {
     request = request || {};
-    response = response || {};
+    // request must have url set
     if(!request.url) {
         throw Error("Please provide a url for the request");
     }
+    // set some reasonable defaults that can be overridden
     request.cache = request.cache || false;
     request.method = request.method || "GET";
+    return request;
+};
+
+var setupResponse = function setupResponse(response) {
+    response = response || {};
+    // set some reasonable defaults that can be overridden
     response.status = response.status || 200;
+    return response;
+};
+
+var stubRequest = function(request, response) {
+    var fauxRequest = setupRequest(request);
+    var fauxResponse = setupResponse(response);
     return Ember.$.fauxjax.new({
-        request: request,
-        response: response
+        request: fauxRequest,
+        response: fauxResponse
     });
 };
 
