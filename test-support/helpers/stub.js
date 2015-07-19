@@ -1,17 +1,17 @@
 import Ember from "ember";
 
 var stubRequest = function(request, response) {
+    request = request || {};
+    response = response || {};
+    if(!request.url) {
+        throw Error("Please provide a url for the request");
+    }
+    request.cache = request.cache || false;
+    request.method = request.method || "GET";
+    response.status = response.status || 200;
     return Ember.$.fauxjax.new({
-        request: {
-            url: request.url,
-            data: request.data,
-            method: request.method || "GET",
-            cache: false
-        },
-        response: {
-            status: response.status || 200,
-            content: response.json
-        }
+        request: request,
+        response: response
     });
 };
 
