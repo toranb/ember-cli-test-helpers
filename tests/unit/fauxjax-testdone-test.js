@@ -116,9 +116,9 @@ test("incorrect mock/request when same url and type on request of unfired and un
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
-    assert.equal(warnMessages[3], "foo: bar");
+    assert.equal(warnMessages[3], "foo: " + JSON.stringify("bar"));
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: baz");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("baz"));
 });
 
 test("incorrect, unfired, and unhandled requests properly handled", function(assert) {
@@ -155,9 +155,9 @@ test("incorrect, unfired, and unhandled requests properly handled", function(ass
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
-    assert.equal(warnMessages[3], "foo: bar");
+    assert.equal(warnMessages[3], "foo: " + JSON.stringify("bar"));
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: baz");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("baz"));
     assert.equal(warnMessages[6], "test module test name");
     assert.equal(warnMessages[7], "Request: GET to /bar not FIRED");
     assert.equal(warnMessages[8], "test module test name");
@@ -186,9 +186,9 @@ test("Incorrect 'headers' handled correctly when mocked headers do not match act
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked headers:");
-    assert.equal(warnMessages[3], "wat: here");
+    assert.equal(warnMessages[3], "wat: " + JSON.stringify("here"));
     assert.equal(warnMessages[4], "Real Request headers:");
-    assert.equal(warnMessages[5], "now: there");
+    assert.equal(warnMessages[5], "now: " + JSON.stringify("there"));
 });
 
 test("incorrect data will be properly formatted for console.warn even if data is JSON.stringified", function(assert) {
@@ -211,9 +211,9 @@ test("incorrect data will be properly formatted for console.warn even if data is
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
-    assert.equal(warnMessages[3], "foo: bar");
+    assert.equal(warnMessages[3], "foo: " + JSON.stringify("bar"));
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: baz");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("baz"));
 });
 
 test("incorrect request data will be console.warn when no data on mocked request", function(assert) {
@@ -237,7 +237,7 @@ test("incorrect request data will be console.warn when no data on mocked request
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: baz");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("baz"));
 });
 
 test("incorrect request data will be console.warn when no data on real request", function(assert) {
@@ -259,7 +259,7 @@ test("incorrect request data will be console.warn when no data on real request",
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
-    assert.equal(warnMessages[3], "foo: bar");
+    assert.equal(warnMessages[3], "foo: " + JSON.stringify("bar"));
     assert.equal(warnMessages[4], "Real Request data:");
     assert.equal(warnMessages[5], "no data");
 });
@@ -286,7 +286,7 @@ test("incorrect request data will be console.warn when data is null or undefined
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: bar");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("bar"));
 });
 
 test("incorrect request data will be console.warn when data is null or undefined", function(assert) {
@@ -309,7 +309,7 @@ test("incorrect request data will be console.warn when data is null or undefined
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
-    assert.equal(warnMessages[3], "foo: bar");
+    assert.equal(warnMessages[3], "foo: " + JSON.stringify("bar"));
     assert.equal(warnMessages[4], "Real Request data:");
     assert.equal(warnMessages[5], "no data");
 });
