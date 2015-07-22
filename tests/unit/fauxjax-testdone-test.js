@@ -346,16 +346,17 @@ test("incorrect request data will be console.warn when either data is empty", fu
     var unhandled = [{
         url: "/foo",
         type: "POST",
-        data: {foo: "bar"}
+        data: {foo: "bar", baz: [{id: 1, name: 'x'}]}
     }];
     $.fauxjax.unfired = function() { return unfired; };
     $.fauxjax.unhandled = function() { return unhandled; };
     done.testDoneCallback();
-    assert.equal(warnMessages.length, 6);
+    assert.equal(warnMessages.length, 7);
     assert.equal(warnMessages[0], "test module test name");
     assert.equal(warnMessages[1], "Request: POST to /foo not CORRECT");
     assert.equal(warnMessages[2], "Mocked data:");
     assert.equal(warnMessages[3], "no data");
     assert.equal(warnMessages[4], "Real Request data:");
-    assert.equal(warnMessages[5], "foo: bar");
+    assert.equal(warnMessages[5], "foo: " + JSON.stringify("bar"));
+    assert.equal(warnMessages[6], "baz: " + JSON.stringify([{id: 1, name: 'x'}]));
 });

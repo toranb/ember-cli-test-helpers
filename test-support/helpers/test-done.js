@@ -81,7 +81,8 @@ var TestDone = Ember.Object.extend({
         }
         for(var key in data) {
             if(data.hasOwnProperty(key)) {
-                console.warn(key + ": " + data[key]);
+                var value = JSON.stringify(data[key]);
+                console.warn(key + ": " + value);
             }
         }
     },
