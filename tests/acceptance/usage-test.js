@@ -168,5 +168,6 @@ test("isHidden will check that element with given selector has class 'hidden'", 
     visit("/");
     andThen(function() {
         isHidden(".element2");
+        isHidden(".element3");
     });
 });

@@ -10,12 +10,12 @@ var assertElement = function(selector, type, count) {
 
 var isVisible = function(selector) {
     var element = find(selector);
-    QUnit.assert.equal(element.hasClass("hidden"), false);
+    QUnit.assert.ok(element.is(":visible"));
 };
 
 var isHidden = function(selector) {
     var element = find(selector);
-    QUnit.assert.equal(element.hasClass("hidden"), true);
+    QUnit.assert.ok(element.is(":hidden"));
 };
 
 var isTextInput = function(selector) {
