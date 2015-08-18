@@ -1,7 +1,7 @@
 import { test } from "qunit";
 import QUnit from "qunit";
 import module from "../helpers/module";
-import {stubRequest} from "../helpers/stub";
+import {stubRequest, clearStubRequests} from "../helpers/stub";
 
 var originalOk, okCounter;
 
@@ -25,6 +25,24 @@ test('module will not fail if stub does not specify response.content', function(
         url: "/wat"
     });
     stubRequest({url: "/foo"});
+    $.ajax({
+        method: "GET",
+        url: "/foo"
+    });
+});
+
+test('clearing responses will leave other stubs', function(assert) {
+    var watRequest = stubRequest({url: "/wat", method: "POST"});
+    stubRequest({url: "/foo"});
+
+    clearStubRequests(watRequest);
+    stubRequest({url: "/wat", method: "POST"});
+
+    $.ajax({
+        method: "POST",
+        url: "/wat"
+    });
+
     $.ajax({
         method: "GET",
         url: "/foo"
