@@ -49,7 +49,7 @@ test('clearing responses will leave other stubs', function(assert) {
     });
 });
 
-test('clear all responses', function(assert) {
-    var watRequest = stubRequest({url: "/wat", method: "POST"});
+test('clear all responses', function() {
+    stubRequest({url: "/wat", method: "POST"});
     clearStubRequests();
 });
