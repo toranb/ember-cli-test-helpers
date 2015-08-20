@@ -48,7 +48,7 @@ var clearStubRequests = function(id) {
 };
 
 var clearStubHttpRequests = function(id) {
-    if (typeof id !== undefined) {
+    if (typeof id !== "undefined") {
         Ember.$.fauxjax.remove(id);
     } else {
         Ember.$.fauxjax.clear();
