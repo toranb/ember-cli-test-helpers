@@ -9,6 +9,12 @@ var setupRequest = function setupRequest(request) {
     // set some reasonable defaults that can be overridden
     request.cache = request.cache || false;
     request.method = request.method || "GET";
+    if(request.data) {
+        var contentType = "application/json";
+    } else {
+        var contentType = "application/x-www-form-urlencoded";
+    }
+    request.contentType = request.contentType || contentType;
     return request;
 };
 
@@ -29,13 +35,18 @@ var stubRequest = function(request, response) {
 };
 
 var stubEndpointForHttpRequest = function(url, json, verb, status, post_data) {
+    var request = {
+        url: url,
+        method: verb || "GET",
+        data: post_data,
+        cache: false,
+        contentType: "application/x-www-form-urlencoded"
+    };
+    if(post_data) {
+        request.contentType = "application/json";
+    }
     return Ember.$.fauxjax.new({
-        request: {
-            url: url,
-            method: verb || "GET",
-            data: post_data,
-            cache: false
-        },
+        request: request,
         response: {
             status: status || 200,
             content: json

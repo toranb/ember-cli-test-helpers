@@ -9,7 +9,7 @@
     "ember-qunit": "0.3.3",
     "ember-qunit-notifications": "0.0.7",
     "es5-shim": "^4.0.5",
-    "fauxjax": "1.0.4",
+    "fauxjax": "1.2.1",
     "foundation": "zurb/bower-foundation#~5.5.0",
     "jquery": "2.1.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
