@@ -8,7 +8,6 @@
     "andThen",
     "click"
   ],
-  "quotmark": "double",
   "browser": true,
   "boss": true,
   "curly": true,

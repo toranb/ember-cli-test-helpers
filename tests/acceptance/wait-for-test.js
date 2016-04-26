@@ -17,21 +17,21 @@ module("Acceptance: waitFor", {
 test("waitFor can be used to help test 3rd party components that dont play nice with ember-testing normally", function(assert) {
     visit("/modal");
     andThen(function () {
-        waitFor(function() {
+        waitFor(assert, function() {
             var theModal = find("#my-modal");
             assert.ok(theModal.is(":hidden"));
         });
     });
     click("#btn-open-modal");
     andThen(function () {
-        waitFor(function() {
+        waitFor(assert, function() {
             var theModal = find("#my-modal");
             assert.ok(!theModal.is(":hidden"));
         });
     });
     click("#btn-close-modal");
     andThen(function () {
-        waitFor(function() {
+        waitFor(assert, function() {
             var theModal = find("#my-modal");
             assert.ok(theModal.is(":hidden"));
         });
