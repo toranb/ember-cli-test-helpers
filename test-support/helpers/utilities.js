@@ -1,15 +1,15 @@
 import Ember from "ember";
-import QUnit from "qunit";
-import config from '../../config/environment';
+import config from "../../config/environment";
 
-var DEFAULT_TIMEOUT = config.APP.defaultWaitForTimeout || 500;
+var APP_TIMEOUT = config.APP.defaultWaitForTimeout;
+var DEFAULT_TIMEOUT = APP_TIMEOUT !== undefined ? APP_TIMEOUT : 500;
 
-var waitFor = function(callback, timeout) {
+var waitFor = function(assert, callback, timeout) {
     timeout = timeout || DEFAULT_TIMEOUT;
-    stop();
+    var done = assert.async();
     Ember.run.later(function(){
         callback();
-        start();
+        done();
     }, timeout);
 };
 
