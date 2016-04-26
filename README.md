@@ -7,6 +7,8 @@
 Ember-cli-test-helpers is a collection of test helpers
 
 ## Installation
+Starting with 2.0, this addon only supports Ember 2.1 and later versions.
+
 ```
 # install via npm
 $ npm install ember-cli-test-helpers --save-dev
