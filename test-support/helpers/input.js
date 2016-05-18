@@ -4,7 +4,8 @@ import QUnit from "qunit";
 var assertElement = function(selector, type, count) {
     var element = find(selector);
     QUnit.assert.equal(element.length, count || 1, "element with selector '" + selector + "' not found");
-    QUnit.assert.equal(element.attr("type"), type, selector + " should be of type " + type);
+    var actualType = element.attr("type");
+    QUnit.assert.equal(actualType, type, selector + " should be of type " + type + " but is " + actualType);
     return element;
 };
 
