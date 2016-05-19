@@ -4,18 +4,19 @@ import QUnit from "qunit";
 var assertElement = function(selector, type, count) {
     var element = find(selector);
     QUnit.assert.equal(element.length, count || 1, "element with selector '" + selector + "' not found");
-    QUnit.assert.equal(element.attr("type"), type);
+    var actualType = element.attr("type");
+    QUnit.assert.equal(actualType, type, selector + " should be of type " + type + " but is " + actualType);
     return element;
 };
 
 var isVisible = function(selector) {
     var element = find(selector);
-    QUnit.assert.ok(element.is(":visible"));
+    QUnit.assert.ok(element.is(":visible"), selector + " should be visible");
 };
 
 var isHidden = function(selector) {
     var element = find(selector);
-    QUnit.assert.ok(element.is(":hidden"));
+    QUnit.assert.ok(element.is(":hidden"), selector + " should be hidden");
 };
 
 var isTextInput = function(selector) {
