@@ -15,21 +15,15 @@ import {isLink} from "../helpers/input";
 import {isFocused} from "../helpers/input";
 import {selectRadioButton} from "../helpers/input";
 import {setCheckboxChecked} from "../helpers/input";
-import { test, module } from "qunit";
+import { test } from "qunit";
+import { moduleAcceptance } from "../helpers/module";
 
 var application;
 
 var RADIO_BUTTON = "input.radio-button";
 var CHECKBOX_INPUT = "input.checkbox-input";
 
-module("Acceptance: Usage", {
-    beforeEach: function() {
-        application = startApp();
-    },
-    afterEach: function() {
-        Ember.run(application, "destroy");
-    }
-});
+moduleAcceptance("Acceptance: Usage");
 
 test("input with class text-input is an with type text", function(assert) {
     visit("/");
